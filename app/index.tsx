@@ -1,16 +1,12 @@
+import React from "react";
 import { colors } from "@/constants/Colors";
-import {
-  Image,
-  Text,
-  View,
-  SafeAreaView,
-  Pressable,
-  StyleSheet,
-} from "react-native";
+import { Image, Text, View, Pressable, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
 
 export default function Index() {
+  const router = useRouter();
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.imageWrapper}>
         <Image
           source={require("../assets/images/landing.png")}
@@ -24,6 +20,7 @@ export default function Index() {
           with Ai 🤖📚
         </Text>
         <Pressable
+          onPress={() => router.push("/auth/SignUp")}
           android_ripple={{ color: colors.Primary }}
           style={styles.button}
         >
@@ -32,6 +29,7 @@ export default function Index() {
           </Text>
         </Pressable>
         <Pressable
+          onPress={() => router.push("/auth/SignIn")}
           style={[
             styles.button,
             {
@@ -46,7 +44,7 @@ export default function Index() {
           </Text>
         </Pressable>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
