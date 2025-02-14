@@ -9,6 +9,9 @@ import {
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import { colors } from "@/constants/Colors";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../config/firebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
 
 const SignUp = () => {
   const router = useRouter();
@@ -17,6 +20,26 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+  const createNewAccount = () => {
+    debugger;
+    createUserWithEmailAndPassword(auth, userInfo?.email, userInfo?.password)
+      .then(async (response) => {
+        const user = response?.user;
+        console.log(user);
+        await saveUser(user);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  const saveUser = async (user: any) => {
+    await setDoc(doc(db, "users", userInfo?.email), {
+      name: userInfo?.name,
+      email: userInfo?.email,
+      member: false,
+      uid: user?.uid,
+    });
+  };
   return (
     <View style={styles.container}>
       <Image
@@ -52,7 +75,7 @@ const SignUp = () => {
       </View>
       <View style={{ width: "100%" }}>
         <Pressable
-          onPress={() => {}}
+          onPress={createNewAccount}
           android_ripple={{ color: colors.Primary }}
           style={styles.button}
         >

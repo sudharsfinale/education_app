@@ -13,7 +13,6 @@ import { colors } from "@/constants/Colors";
 const SignIn = () => {
   const router = useRouter();
   const [userInfo, setUserInfo] = useState({
-    name: "",
     email: "",
     password: "",
   });
