@@ -1,5 +1,7 @@
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
+import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function RootLayout() {
   useFonts({
@@ -9,5 +11,9 @@ export default function RootLayout() {
     "outfit-light": require("@/assets/fonts/Outfit-Light.ttf"),
     "outfit-regular": require("@/assets/fonts/Outfit-Regular.ttf"),
   });
-  return <Stack screenOptions={{ headerShown: false }}></Stack>;
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <Stack screenOptions={{ headerShown: false }}></Stack>
+    </SafeAreaView>
+  );
 }
