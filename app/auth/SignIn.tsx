@@ -5,10 +5,16 @@ import {
   TextInput,
   StyleSheet,
   Pressable,
+  ToastAndroid,
+  ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useRouter } from "expo-router";
 import { colors } from "@/constants/Colors";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "@/config/firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
+import { UserDetailContext } from "@/context/UserDetailContext";
 
 const SignIn = () => {
   const router = useRouter();
@@ -16,6 +22,36 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+  //@ts-ignore
+  const { userDetail, setUserDetail } = useContext(UserDetailContext);
+  const [loading, setLoading] = useState(false);
+  const onSignInClick = () => {
+    setLoading(true);
+    signInWithEmailAndPassword(auth, userInfo?.email, userInfo?.password)
+      .then(async (userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        await getUserDetail();
+        setLoading(false);
+        router.replace("/(tabs)/Home");
+      })
+      .catch((error) => {
+        console.log(error);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setLoading(false);
+        ToastAndroid.show(errorMessage, ToastAndroid.BOTTOM);
+      });
+  };
+  const getUserDetail = async () => {
+    let result = await getDoc(doc(db, "users", userInfo?.email));
+    if (result.exists()) {
+      setUserDetail(result.data());
+    } else {
+      console.log("No such document!");
+    }
+    console.log("getUserDetail", result.data());
+  };
   return (
     <View style={styles.container}>
       <Image
@@ -42,11 +78,15 @@ const SignIn = () => {
       </View>
       <View style={{ width: "100%" }}>
         <Pressable
-          onPress={() => {}}
+          onPress={onSignInClick}
           android_ripple={{ color: colors.Primary }}
           style={styles.button}
         >
-          <Text style={[styles.buttonText]}>Sign In</Text>
+          {loading ? (
+            <ActivityIndicator color={colors.White} />
+          ) : (
+            <Text style={[styles.buttonText]}>Sign In</Text>
+          )}
         </Pressable>
       </View>
       <Text style={styles.bottomText}>

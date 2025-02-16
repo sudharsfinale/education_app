@@ -1,6 +1,7 @@
+import { UserDetailContext } from "@/context/UserDetailContext";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function RootLayout() {
@@ -11,9 +12,15 @@ export default function RootLayout() {
     "outfit-light": require("@/assets/fonts/Outfit-Light.ttf"),
     "outfit-regular": require("@/assets/fonts/Outfit-Regular.ttf"),
   });
+  const [userDetail, setUserDetail] = useState({});
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Stack screenOptions={{ headerShown: false }}></Stack>
+      <UserDetailContext.Provider
+        //@ts-ignore
+        value={{ userDetail, setUserDetail }}
+      >
+        <Stack screenOptions={{ headerShown: false }}></Stack>
+      </UserDetailContext.Provider>
     </SafeAreaView>
   );
 }

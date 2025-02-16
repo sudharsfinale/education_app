@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { colors } from "@/constants/Colors";
 import { Image, Text, View, Pressable, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "@/config/firebaseConfig";
+import { UserDetailContext } from "@/context/UserDetailContext";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function Index() {
   const router = useRouter();
+  //@ts-ignore
+  const { userDetail, setUserDetail } = useContext(UserDetailContext);
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      //@ts-ignore
+      let result = await getDoc(doc(db, "users", user?.email));
+      if (result.exists()) {
+        setUserDetail(result.data());
+      } else {
+        console.log("No such document!");
+      }
+    }
+  });
   return (
     <View style={styles.container}>
       <View style={styles.imageWrapper}>
