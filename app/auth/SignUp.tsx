@@ -6,12 +6,13 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useRouter } from "expo-router";
 import { colors } from "@/constants/Colors";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../config/firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
+import { UserDetailContext } from "@/context/UserDetailContext";
 
 const SignUp = () => {
   const router = useRouter();
@@ -20,6 +21,8 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+  //@ts-ignore
+  const { userDetail, setUserDetail } = useContext(UserDetailContext);
   const createNewAccount = () => {
     debugger;
     createUserWithEmailAndPassword(auth, userInfo?.email, userInfo?.password)
@@ -33,12 +36,14 @@ const SignUp = () => {
       });
   };
   const saveUser = async (user: any) => {
-    await setDoc(doc(db, "users", userInfo?.email), {
+    let data = {
       name: userInfo?.name,
       email: userInfo?.email,
       member: false,
       uid: user?.uid,
-    });
+    };
+    await setDoc(doc(db, "users", userInfo?.email), data);
+    setUserDetail(data);
   };
   return (
     <View style={styles.container}>
