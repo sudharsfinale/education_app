@@ -2,10 +2,11 @@ import { View, Text } from "react-native";
 import React from "react";
 import Header from "@/components/Home/Header";
 import NoCoursePage from "@/components/Home/NoCoursePage";
+import { colors } from "@/constants/Colors";
 
 const Home = () => {
   return (
-    <View style={{ padding: 25 }}>
+    <View style={{ padding: 25, backgroundColor: colors.White, flex: 1 }}>
       <Header />
       <NoCoursePage />
     </View>
