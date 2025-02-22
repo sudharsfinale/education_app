@@ -38,10 +38,10 @@ export default function Index() {
         </Text>
         <Pressable
           onPress={() => router.push("/auth/SignUp")}
-          android_ripple={{ color: colors.Primary }}
+          android_ripple={{ color: colors.PRIMARY }}
           style={styles.button}
         >
-          <Text style={[styles.buttonText, { color: colors.Primary }]}>
+          <Text style={[styles.buttonText, { color: colors.PRIMARY }]}>
             Get Started
           </Text>
         </Pressable>
@@ -52,11 +52,11 @@ export default function Index() {
             {
               backgroundColor: "transparent",
               borderWidth: 1,
-              borderColor: colors.White,
+              borderColor: colors.WHITE,
             },
           ]}
         >
-          <Text style={[styles.buttonText, { color: colors.White }]}>
+          <Text style={[styles.buttonText, { color: colors.WHITE }]}>
             Already Have an Account ?
           </Text>
         </Pressable>
@@ -68,7 +68,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.White,
+    backgroundColor: colors.WHITE,
     justifyContent: "flex-end",
   },
   imageWrapper: {
@@ -89,17 +89,17 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: colors.White,
+    color: colors.WHITE,
     fontFamily: "outfit-bold",
   },
   subtitle: {
     textAlign: "center",
     lineHeight: 20,
-    color: colors.White,
+    color: colors.WHITE,
     fontFamily: "outfit-semiBold",
   },
   button: {
-    backgroundColor: "white",
+    backgroundColor: colors.WHITE,
     width: "100%",
     paddingHorizontal: 16,
     paddingVertical: 16,

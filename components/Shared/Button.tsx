@@ -11,8 +11,8 @@ const Button = (props: any) => {
         width: "100%",
         borderRadius: 15,
         marginTop: 15,
-        backgroundColor: type === "fill" ? colors.Primary : colors.White,
-        borderColor: colors.Primary,
+        backgroundColor: type === "fill" ? colors.PRIMARY : colors.WHITE,
+        borderColor: colors.PRIMARY,
         borderWidth: 1,
       }}
       onPress={onButtonPress}
@@ -21,7 +21,7 @@ const Button = (props: any) => {
         style={{
           textAlign: "center",
           fontSize: 18,
-          color: type === "fill" ? colors.White : colors.Primary,
+          color: type === "fill" ? colors.PRIMARY : colors.PRIMARY,
         }}
       >
         {buttonText}
