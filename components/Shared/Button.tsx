@@ -1,33 +1,68 @@
 import { colors } from "@/constants/Colors";
-import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import React, { FC } from "react";
+import {
+  ActivityIndicator,
+  Text,
+  TouchableOpacity,
+  GestureResponderEvent,
+  StyleSheet,
+} from "react-native";
 
-const Button = (props: any) => {
-  const { buttonText, type = "fill", onButtonPress = () => {} } = props;
+interface ButtonProps {
+  buttonText: string;
+  type?: "fill" | "outline";
+  onButtonPress?: (event: GestureResponderEvent) => void;
+  loading?: boolean;
+}
+
+const Button = (props: ButtonProps) => {
+  const {
+    buttonText,
+    type = "fill",
+    onButtonPress = () => {},
+    loading = false,
+  } = props;
+
   return (
     <TouchableOpacity
-      style={{
-        padding: 15,
-        width: "100%",
-        borderRadius: 15,
-        marginTop: 15,
-        backgroundColor: type === "fill" ? colors.PRIMARY : colors.WHITE,
-        borderColor: colors.PRIMARY,
-        borderWidth: 1,
-      }}
+      style={[
+        styles.button,
+        {
+          backgroundColor: type === "fill" ? colors.PRIMARY : colors.WHITE,
+          borderColor: colors.PRIMARY,
+        },
+      ]}
       onPress={onButtonPress}
+      disabled={loading}
     >
-      <Text
-        style={{
-          textAlign: "center",
-          fontSize: 18,
-          color: type === "fill" ? colors.PRIMARY : colors.PRIMARY,
-        }}
-      >
-        {buttonText}
-      </Text>
+      {loading ? (
+        <ActivityIndicator size={21.5} />
+      ) : (
+        <Text
+          style={[
+            styles.text,
+            { color: type === "fill" ? colors.WHITE : colors.PRIMARY },
+          ]}
+        >
+          {buttonText}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  button: {
+    padding: 15,
+    width: "100%",
+    borderRadius: 15,
+    marginTop: 15,
+    borderWidth: 1,
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 18,
+  },
+});
 
 export default Button;

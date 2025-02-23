@@ -79,11 +79,11 @@ const SignIn = () => {
       <View style={{ width: "100%" }}>
         <Pressable
           onPress={onSignInClick}
-          android_ripple={{ color: colors.Primary }}
+          android_ripple={{ color: colors.PRIMARY }}
           style={styles.button}
         >
           {loading ? (
-            <ActivityIndicator color={colors.White} />
+            <ActivityIndicator color={colors.WHITE} />
           ) : (
             <Text style={[styles.buttonText]}>Sign In</Text>
           )}
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     flex: 1,
-    backgroundColor: colors.White,
+    backgroundColor: colors.WHITE,
     justifyContent: "flex-end",
     paddingBottom: 32,
   },
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     borderColor: "#e7e7e7",
   },
   button: {
-    backgroundColor: colors.Primary,
+    backgroundColor: colors.PRIMARY,
     marginHorizontal: 16,
     paddingHorizontal: 16,
     paddingVertical: 16,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   bottomTextLink: {
-    color: colors.Primary,
+    color: colors.PRIMARY,
     marginTop: 20,
     fontFamily: "outfit-regular",
     fontSize: 16,
