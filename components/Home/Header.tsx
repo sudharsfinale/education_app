@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React, { useContext } from "react";
 import { UserDetailContext } from "@/context/UserDetailContext";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,7 +21,9 @@ const Header = () => {
           Let's get started
         </Text>
       </View>
-      <Ionicons size={32} name="settings-outline" />
+      <TouchableOpacity>
+        <Ionicons size={32} name="settings-outline" />
+      </TouchableOpacity>
     </View>
   );
 };

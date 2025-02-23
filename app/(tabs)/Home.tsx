@@ -6,7 +6,7 @@ import { colors } from "@/constants/Colors";
 
 const Home = () => {
   return (
-    <View style={{ padding: 25, backgroundColor: colors.White, flex: 1 }}>
+    <View style={{ padding: 25, backgroundColor: colors.WHITE, flex: 1 }}>
       <Header />
       <NoCoursePage />
     </View>
