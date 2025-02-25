@@ -2,7 +2,7 @@ import { View, Text, TextInput, ScrollView, Pressable } from "react-native";
 import React, { useState } from "react";
 import { colors } from "@/constants/Colors";
 import Button from "@/components/Shared/Button";
-import { GenerateTopicsAiModel } from "@/config/AiModel";
+import { GenerateCourseAiModel, GenerateTopicsAiModel } from "@/config/AiModel";
 import Prompt from "@/constants/Prompt";
 
 const AddCourse = () => {
@@ -25,7 +25,20 @@ const AddCourse = () => {
       setLoading(false);
     }
   };
-  const onGenerateCourse = () => {};
+  const onGenerateCourse = async () => {
+    try {
+      setLoading(true);
+      const PROMPT = selectedTopics + Prompt.COURSE;
+      const airesponse = await GenerateCourseAiModel.sendMessage(PROMPT);
+      let course = JSON.parse(airesponse.response.text());
+      console.log(course);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  console.log("hi");
   const onTopicSelect = (topic: string) => {
     let isTopicAlreadySelected = selectedTopics.find(
       (_topic: any) => _topic === topic
@@ -137,6 +150,7 @@ const AddCourse = () => {
         {selectedTopics.length > 0 ? (
           <Button
             buttonText="Generate Course"
+            loading={loading}
             onButtonPress={() => onGenerateCourse()}
           ></Button>
         ) : null}
