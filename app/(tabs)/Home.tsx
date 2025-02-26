@@ -30,7 +30,7 @@ const Home = () => {
     <View style={{ padding: 25, backgroundColor: colors.WHITE, flex: 1 }}>
       <Header />
       {Array.isArray(courseList) && courseList?.length ? (
-        <CourseList />
+        <CourseList courseList={courseList} />
       ) : (
         <NoCoursePage />
       )}
