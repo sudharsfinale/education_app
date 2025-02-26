@@ -1,15 +1,25 @@
 import { View, Text, TextInput, ScrollView, Pressable } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { colors } from "@/constants/Colors";
 import Button from "@/components/Shared/Button";
-import { GenerateTopicsAiModel } from "@/config/AiModel";
+import { GenerateCourseAiModel, GenerateTopicsAiModel } from "@/config/AiModel";
 import Prompt from "@/constants/Prompt";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/config/firebaseConfig";
+import { UserDetailContext } from "@/context/UserDetailContext";
+import { useRouter } from "expo-router";
 
 const AddCourse = () => {
   const [loading, setLoading] = useState(false);
   const [userInput, setUserInput] = useState("");
   const [topics, setTopics] = useState([]);
   const [selectedTopics, setSelectedTopics] = useState<any>([]);
+
+  //@ts-ignore
+  const { userDetail, setUserDetail } = useContext(UserDetailContext);
+
+  const router = useRouter();
+
   const onGenerateTopic = async () => {
     try {
       setLoading(true);
@@ -25,7 +35,29 @@ const AddCourse = () => {
       setLoading(false);
     }
   };
-  const onGenerateCourse = () => {};
+  const onGenerateCourse = async () => {
+    setLoading(true);
+    const PROMPT = selectedTopics + Prompt.COURSE;
+    try {
+      const airesponse = await GenerateCourseAiModel.sendMessage(PROMPT);
+      let courses = JSON.parse(airesponse.response.text());
+      courses?.forEach(async (course: any) => {
+        await setDoc(doc(db, "Courses", Date.now().toString()), {
+          ...course,
+          createdOn: new Date(),
+          createdBy: userDetail?.email,
+        });
+      });
+      console.log(courses);
+      setLoading(false);
+      router.push("/(tabs)/Home");
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
   const onTopicSelect = (topic: string) => {
     let isTopicAlreadySelected = selectedTopics.find(
       (_topic: any) => _topic === topic
@@ -137,6 +169,7 @@ const AddCourse = () => {
         {selectedTopics.length > 0 ? (
           <Button
             buttonText="Generate Course"
+            loading={loading}
             onButtonPress={() => onGenerateCourse()}
           ></Button>
         ) : null}
