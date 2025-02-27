@@ -11,6 +11,7 @@ const Header = () => {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
+        margin: 25,
       }}
     >
       <View style={{ gap: 4 }}>

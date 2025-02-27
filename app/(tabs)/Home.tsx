@@ -12,22 +12,30 @@ const Home = () => {
   //@ts-ignore
   const { userDetail, setUserDetail } = useContext(UserDetailContext);
   const [courseList, setCourseList] = useState<any>([]);
+  const [coursesFetched, setCoursesFetched] = useState(false);
   const getCourseList = async () => {
-    const q = query(
-      collection(db, "Courses"),
-      where("createdBy", "==", userDetail?.email)
-    );
-    const querySnapShot = await getDocs(q);
-    querySnapShot?.forEach((doc) => {
-      setCourseList((prev: any) => [...prev, doc.data()]);
-    });
+    if (!userDetail?.email || coursesFetched) return;
+
+    try {
+      const q = query(
+        collection(db, "Courses"),
+        where("createdBy", "==", userDetail.email)
+      );
+      const querySnapShot = await getDocs(q);
+      const courses = querySnapShot.docs.map((doc) => doc.data());
+
+      setCourseList(courses); // Update once
+      setCoursesFetched(true);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
   };
   useEffect(() => {
     getCourseList();
-  }, []);
+  }, [userDetail]);
   console.log(courseList);
   return (
-    <View style={{ padding: 25, backgroundColor: colors.WHITE, flex: 1 }}>
+    <View style={{ backgroundColor: colors.WHITE, flex: 1 }}>
       <Header />
       {Array.isArray(courseList) && courseList?.length ? (
         <CourseList courseList={courseList} />
