@@ -24,34 +24,36 @@ const CourseProgress = ({ courseList }: any) => {
           renderItem={({ item, index }) => (
             <View
               style={{
-                flexDirection: "row",
                 backgroundColor: colors.BG_GRAY,
                 padding: 8,
                 borderRadius: 16,
-                gap: 8,
+
                 marginLeft: index === 0 ? 25 : 0,
+                width: 280,
               }}
             >
-              <View>
+              <View style={{ flexDirection: "row", gap: 8 }}>
                 //@ts-ignore
                 <Image
                   style={{ height: 60, width: 60, borderRadius: 16 }}
                   //@ts-ignore
                   source={imageAssets[item?.banner_image]}
                 />
-              </View>
-              <View style={{ gap: 5 }}>
-                <Text
-                  style={{
-                    fontFamily: "outfit-bold",
-                    fontSize: 16,
-                  }}
-                >
-                  {item?.courseTitle}
-                </Text>
-                <Text style={{ color: colors.GRAY }}>
-                  {item?.chapters?.length} Chapters
-                </Text>
+                <View style={{ gap: 5, flex: 1 }}>
+                  <Text
+                    numberOfLines={2}
+                    style={{
+                      fontFamily: "outfit-bold",
+                      fontSize: 16,
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    {item?.courseTitle}
+                  </Text>
+                  <Text style={{ fontFamily: "outfit-regular", fontSize: 12 }}>
+                    {item?.chapters?.length} Chapters
+                  </Text>
+                </View>
               </View>
             </View>
           )}
