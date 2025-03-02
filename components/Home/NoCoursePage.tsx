@@ -6,7 +6,7 @@ import { useRouter } from "expo-router";
 const NoCoursePage = () => {
   const router = useRouter();
   return (
-    <View style={{ marginTop: 40, alignItems: "center" }}>
+    <View style={{ marginTop: 40, alignItems: "center", marginHorizontal: 25 }}>
       <Image
         style={{ width: 200, height: 200 }}
         source={require("../../assets/images/book.png")}

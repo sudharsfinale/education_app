@@ -7,53 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 const CourseList = (props: any) => {
   const { courseList } = props;
   return (
-    <View style={{ marginTop: 12 }}>
-      <Text
-        style={{
-          fontFamily: "outfit-bold",
-          fontSize: 25,
-          marginHorizontal: 25,
-        }}
-      >
-        Practice
-      </Text>
-      <View style={{ marginHorizontal: 25, marginVertical: 16 }}>
-        <FlatList
-          numColumns={3}
-          data={PraticeOption}
-          showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
-          renderItem={({ item, index }) => (
-            <View
-              style={{
-                flex: 1,
-                aspectRatio: 1,
-                marginRight: PraticeOption.length - 1 === index ? 0 : 8,
-              }}
-            >
-              <Image
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  maxHeight: 160,
-                  borderRadius: 16,
-                }}
-                source={item.image}
-              />
-              <Text
-                style={{
-                  position: "absolute",
-                  fontFamily: "outfit-regular",
-                  padding: 15,
-                  color: colors.WHITE,
-                }}
-              >
-                {item.name}
-              </Text>
-            </View>
-          )}
-        />
-      </View>
+    <View style={{ marginVertical: 12 }}>
       <Text
         style={{
           fontFamily: "outfit-bold",
@@ -72,7 +26,7 @@ const CourseList = (props: any) => {
           <View
             style={{
               marginLeft: index === 0 ? 25 : 0,
-              marginTop: 20,
+              marginTop: 4,
               backgroundColor: colors.BG_GRAY,
               padding: 10,
               borderRadius: 16,
