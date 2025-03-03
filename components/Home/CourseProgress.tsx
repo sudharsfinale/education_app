@@ -2,6 +2,7 @@ import { View, Text, FlatList, Image } from "react-native";
 import React from "react";
 import { imageAssets } from "@/constants/Options";
 import { colors } from "@/constants/Colors";
+import * as Progress from "react-native-progress";
 
 const CourseProgress = ({ courseList }: any) => {
   return (
@@ -54,6 +55,18 @@ const CourseProgress = ({ courseList }: any) => {
                     {item?.chapters?.length} Chapters
                   </Text>
                 </View>
+              </View>
+              <View style={{ marginTop: 12, marginBottom: 6 }}>
+                <Progress.Bar progress={0} width={260} />
+                <Text
+                  style={{
+                    fontFamily: "outfit-regular",
+                    fontSize: 12,
+                    marginTop: 2,
+                  }}
+                >
+                  3 out of 5 Chapters Completed
+                </Text>
               </View>
             </View>
           )}
