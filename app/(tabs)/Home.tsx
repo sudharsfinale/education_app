@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, FlatList } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import Header from "@/components/Home/Header";
 import NoCoursePage from "@/components/Home/NoCoursePage";
@@ -37,22 +37,25 @@ const Home = () => {
     getCourseList();
   }, [userDetail]);
   return (
-    <ScrollView
-      nestedScrollEnabled={true}
+    <FlatList
+      data={[]}
+      renderItem={() => <></>}
       showsVerticalScrollIndicator={false}
-      style={{ backgroundColor: colors.WHITE, flex: 1 }}
-    >
-      <Header />
-      {Array.isArray(courseList) && courseList?.length ? (
-        <View>
-          <CourseProgress courseList={courseList} />
-          <PracticeSection />
-          <CourseList courseList={courseList} />
+      ListHeaderComponent={
+        <View style={{ backgroundColor: colors.WHITE, flex: 1 }}>
+          <Header />
+          {Array.isArray(courseList) && courseList?.length ? (
+            <View>
+              <CourseProgress courseList={courseList} />
+              <PracticeSection />
+              <CourseList courseList={courseList} />
+            </View>
+          ) : (
+            <NoCoursePage />
+          )}
         </View>
-      ) : (
-        <NoCoursePage />
-      )}
-    </ScrollView>
+      }
+    />
   );
 };
 
