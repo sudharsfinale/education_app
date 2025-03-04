@@ -39,7 +39,7 @@ const Home = () => {
   return (
     <FlatList
       data={[]}
-      renderItem={() => <></>}
+      renderItem={() => <View></View>}
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={
         <View style={{ backgroundColor: colors.WHITE, flex: 1 }}>
