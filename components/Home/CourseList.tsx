@@ -1,11 +1,13 @@
 //@ts-nocheck
-import { View, Text, FlatList, Image } from "react-native";
+import { View, Text, FlatList, Image, Pressable } from "react-native";
 import React from "react";
 import { imageAssets, PraticeOption } from "@/constants/Options";
 import { colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 const CourseList = (props: any) => {
   const { courseList } = props;
+  const router = useRouter();
   return (
     <View style={{ marginVertical: 12 }}>
       <Text
@@ -23,7 +25,13 @@ const CourseList = (props: any) => {
         showsHorizontalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
         renderItem={({ item, index }: any) => (
-          <View
+          <Pressable
+            onPress={() =>
+              router.push({
+                pathname: "/courseView",
+                params: { courseParams: JSON.stringify(item) },
+              })
+            }
             style={{
               marginLeft: index === 0 ? 25 : 0,
               marginTop: 4,
@@ -55,7 +63,7 @@ const CourseList = (props: any) => {
                 {item?.chapters?.length} Chapters
               </Text>
             </View>
-          </View>
+          </Pressable>
         )}
       />
     </View>
