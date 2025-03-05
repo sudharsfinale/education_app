@@ -17,6 +17,7 @@ export default function Index() {
       let result = await getDoc(doc(db, "users", user?.email));
       if (result.exists()) {
         setUserDetail(result.data());
+        router.replace("/(tabs)/Home");
       } else {
         console.log("No such document!");
       }

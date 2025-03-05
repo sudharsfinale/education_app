@@ -9,7 +9,10 @@ const CourseView = () => {
   console.log(course);
   return (
     <View>
-      <Image source={imageAssets[course?.banner_image]}></Image>
+      <Image
+        style={{ width: "auto", height: 200 }}
+        source={imageAssets[course?.banner_image]}
+      ></Image>
     </View>
   );
 };
