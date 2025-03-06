@@ -34,7 +34,6 @@ const CourseProgress = ({ courseList }: any) => {
               }}
             >
               <View style={{ flexDirection: "row", gap: 8 }}>
-                //@ts-ignore
                 <Image
                   style={{ height: 60, width: 60, borderRadius: 16 }}
                   //@ts-ignore
