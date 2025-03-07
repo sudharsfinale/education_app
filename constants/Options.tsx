@@ -19,7 +19,7 @@ export const PraticeOption = [
   },
 ];
 
-export const imageAssets = {
+export const imageAssets: any = {
   "/banner1.png": require("./../assets/images/banner1.png"),
   "/banner2.png": require("./../assets/images/banner2.png"),
   "/banner3.png": require("./../assets/images/banner3.png"),
