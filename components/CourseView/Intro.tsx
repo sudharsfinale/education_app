@@ -4,6 +4,7 @@ import { imageAssets } from "@/constants/Options";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "@/constants/Colors";
 import { useRouter } from "expo-router";
+import Button from "../Shared/Button";
 
 const Intro = (props: any) => {
   const { course } = props;
@@ -43,6 +44,7 @@ const Intro = (props: any) => {
         >
           {course?.description} Chapters
         </Text>
+        <Button onButtonPress={() => {}} buttonText={"Start Learning"} />
       </View>
       <Pressable
         onPress={() => router.back()}
