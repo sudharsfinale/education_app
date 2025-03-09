@@ -27,10 +27,7 @@ const Button = (props: ButtonProps) => {
     <TouchableOpacity
       style={[
         styles.button,
-        {
-          backgroundColor: type === "fill" ? colors.PRIMARY : colors.WHITE,
-          borderColor: colors.PRIMARY,
-        },
+        type === "fill" ? styles.fillButton : styles.outlineButton,
       ]}
       onPress={onButtonPress}
       disabled={loading}
@@ -41,7 +38,7 @@ const Button = (props: ButtonProps) => {
         <Text
           style={[
             styles.text,
-            { color: type === "fill" ? colors.WHITE : colors.PRIMARY },
+            type === "fill" ? styles.fillText : styles.outlineText,
           ]}
         >
           {buttonText}
@@ -59,9 +56,23 @@ const styles = StyleSheet.create({
     marginTop: 15,
     borderWidth: 1,
   },
+  fillButton: {
+    backgroundColor: colors.PRIMARY,
+    borderColor: colors.PRIMARY,
+  },
+  outlineButton: {
+    backgroundColor: colors.WHITE,
+    borderColor: colors.PRIMARY,
+  },
   text: {
     textAlign: "center",
     fontSize: 18,
+  },
+  fillText: {
+    color: colors.WHITE,
+  },
+  outlineText: {
+    color: colors.PRIMARY,
   },
 });
 

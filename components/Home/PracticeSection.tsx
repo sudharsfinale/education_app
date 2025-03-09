@@ -1,53 +1,27 @@
-import { View, Text, Image, FlatList } from "react-native";
+import { View, Text, Image, FlatList, StyleSheet } from "react-native";
 import React from "react";
 import { PraticeOption } from "@/constants/Options";
 import { colors } from "@/constants/Colors";
 
 const PracticeSection = () => {
   return (
-    <View style={{ marginTop: 12 }}>
-      <Text
-        style={{
-          fontFamily: "outfit-bold",
-          fontSize: 25,
-          marginHorizontal: 25,
-        }}
-      >
-        Practice
-      </Text>
-      <View style={{ marginHorizontal: 25, marginVertical: 4 }}>
+    <View style={styles.container}>
+      <Text style={styles.title}>Practice</Text>
+      <View style={styles.listContainer}>
         <FlatList
           numColumns={3}
           data={PraticeOption}
           showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
           renderItem={({ item, index }) => (
             <View
-              style={{
-                flex: 1,
-                aspectRatio: 1,
-                marginRight: PraticeOption.length - 1 === index ? 0 : 8,
-              }}
+              style={[
+                styles.itemContainer,
+                index !== PraticeOption.length - 1 && styles.itemMargin,
+              ]}
             >
-              <Image
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  maxHeight: 160,
-                  borderRadius: 16,
-                }}
-                source={item.image}
-              />
-              <Text
-                style={{
-                  position: "absolute",
-                  fontFamily: "outfit-regular",
-                  padding: 15,
-                  color: colors.WHITE,
-                }}
-              >
-                {item.name}
-              </Text>
+              <Image style={styles.image} source={item.image} />
+              <Text style={styles.imageText}>{item.name}</Text>
             </View>
           )}
         />
@@ -55,5 +29,42 @@ const PracticeSection = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 12,
+  },
+  title: {
+    fontFamily: "outfit-bold",
+    fontSize: 25,
+    marginHorizontal: 25,
+  },
+  listContainer: {
+    marginHorizontal: 25,
+    marginVertical: 4,
+  },
+  separator: {
+    width: 16,
+  },
+  itemContainer: {
+    flex: 1,
+    aspectRatio: 1,
+  },
+  itemMargin: {
+    marginRight: 8,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    maxHeight: 160,
+    borderRadius: 16,
+  },
+  imageText: {
+    position: "absolute",
+    fontFamily: "outfit-regular",
+    padding: 15,
+    color: colors.WHITE,
+  },
+});
 
 export default PracticeSection;
