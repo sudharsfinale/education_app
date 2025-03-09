@@ -1,4 +1,11 @@
-import { View, Text, TextInput, ScrollView, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  Pressable,
+  StyleSheet,
+} from "react-native";
 import React, { useContext, useState } from "react";
 import { colors } from "@/constants/Colors";
 import Button from "@/components/Shared/Button";
@@ -48,7 +55,6 @@ const AddCourse = () => {
           createdBy: userDetail?.email,
         });
       });
-      console.log(courses);
       setLoading(false);
       router.push("/(tabs)/Home");
     } catch (error) {
@@ -74,32 +80,11 @@ const AddCourse = () => {
   };
   return (
     <ScrollView>
-      <View style={{ flex: 1, backgroundColor: colors.WHITE, padding: 25 }}>
-        <Text
-          style={{
-            fontFamily: "outfit-bold",
-            fontSize: 30,
-          }}
-        >
-          Create New Course
-        </Text>
-        <Text
-          style={{
-            fontFamily: "outfit-regular",
-            fontSize: 24,
-          }}
-        >
-          What you want to learn today?
-        </Text>
-        <Text
-          style={{
-            fontFamily: "outfit-regular",
-            fontSize: 20,
-            marginTop: 8,
-            color: colors.GRAY,
-          }}
-        >
-          What course you want to create (Ex.Learn Python, Digital Marketing,
+      <View style={styles.container}>
+        <Text style={styles.title}>Create New Course</Text>
+        <Text style={styles.subtitle}>What you want to learn today?</Text>
+        <Text style={styles.description}>
+          What course you want to create (Ex. Learn Python, Digital Marketing,
           10th Science Chapters, etc...)
         </Text>
         <TextInput
@@ -107,15 +92,7 @@ const AddCourse = () => {
           numberOfLines={3}
           value={userInput}
           onChangeText={(text) => setUserInput(text)}
-          style={{
-            borderRadius: 15,
-            borderWidth: 1,
-            padding: 15,
-            height: 100,
-            marginTop: 20,
-            alignItems: "flex-start",
-            fontSize: 16,
-          }}
+          style={styles.input}
           placeholder="Learn Python, Learn 12th chemistry"
         />
         <Button
@@ -124,32 +101,21 @@ const AddCourse = () => {
           onButtonPress={onGenerateTopic}
           loading={loading}
         />
-        <Text
-          style={{ marginTop: 20, fontFamily: "outfit-regular", fontSize: 20 }}
-        >
+        <Text style={styles.topicTitle}>
           Select all topics which you want to add in the course
         </Text>
-        <View
-          style={{
-            gap: 10,
-            marginTop: 8,
-            flexDirection: "row",
-            flexWrap: "wrap",
-          }}
-        >
+        <View style={styles.topicContainer}>
           {topics &&
             topics.map((item, index) => (
               <Pressable
-                style={{
-                  borderWidth: 0.5,
-                  paddingVertical: 10,
-                  borderRadius: 50,
-                  paddingHorizontal: 15,
-                  backgroundColor: selectedTopics.includes(item)
-                    ? colors.PRIMARY
-                    : colors.WHITE,
-                  borderColor: colors.PRIMARY,
-                }}
+                style={[
+                  styles.topicButton,
+                  {
+                    backgroundColor: selectedTopics.includes(item)
+                      ? colors.PRIMARY
+                      : colors.WHITE,
+                  },
+                ]}
                 onPress={() => onTopicSelect(item)}
                 key={index}
               >
@@ -166,16 +132,65 @@ const AddCourse = () => {
               </Pressable>
             ))}
         </View>
-        {selectedTopics.length > 0 ? (
+        {selectedTopics.length > 0 && (
           <Button
             buttonText="Generate Course"
             loading={loading}
             onButtonPress={() => onGenerateCourse()}
-          ></Button>
-        ) : null}
+          />
+        )}
       </View>
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.WHITE,
+    padding: 25,
+  },
+  title: {
+    fontFamily: "outfit-bold",
+    fontSize: 30,
+  },
+  subtitle: {
+    fontFamily: "outfit-regular",
+    fontSize: 24,
+  },
+  description: {
+    fontFamily: "outfit-regular",
+    fontSize: 20,
+    marginTop: 8,
+    color: colors.GRAY,
+  },
+  input: {
+    borderRadius: 15,
+    borderWidth: 1,
+    padding: 15,
+    height: 100,
+    marginTop: 20,
+    alignItems: "flex-start",
+    fontSize: 16,
+  },
+  topicTitle: {
+    marginTop: 20,
+    fontFamily: "outfit-regular",
+    fontSize: 20,
+  },
+  topicContainer: {
+    gap: 10,
+    marginTop: 8,
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  topicButton: {
+    borderWidth: 0.5,
+    paddingVertical: 10,
+    borderRadius: 50,
+    paddingHorizontal: 15,
+    borderColor: colors.PRIMARY,
+  },
+});
 
 export default AddCourse;

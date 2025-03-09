@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image } from "react-native";
+import { View, Text, FlatList, Image, StyleSheet } from "react-native";
 import React from "react";
 import { imageAssets } from "@/constants/Options";
 import { colors } from "@/constants/Colors";
@@ -6,64 +6,42 @@ import * as Progress from "react-native-progress";
 
 const CourseProgress = ({ courseList }: any) => {
   return (
-    <View style={{ marginTop: 12 }}>
-      <Text
-        style={{
-          fontFamily: "outfit-bold",
-          fontSize: 25,
-          marginHorizontal: 25,
-        }}
-      >
-        Progress
-      </Text>
-      <View style={{ marginVertical: 0, marginTop: 8 }}>
+    <View style={styles.container}>
+      <Text style={styles.title}>Progress</Text>
+      <View style={styles.listContainer}>
         <FlatList
           data={courseList}
           horizontal
           showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
           renderItem={({ item, index }) => (
             <View
-              style={{
-                backgroundColor: colors.BG_GRAY,
-                padding: 8,
-                borderRadius: 16,
-
-                marginLeft: index === 0 ? 25 : 0,
-                width: 280,
-              }}
+              style={[
+                styles.card,
+                {
+                  marginLeft: index === 0 ? 25 : 0,
+                  backgroundColor: colors.BG_GRAY,
+                },
+              ]}
             >
-              <View style={{ flexDirection: "row", gap: 8 }}>
+              <View style={styles.courseInfo}>
                 <Image
-                  style={{ height: 60, width: 60, borderRadius: 16 }}
+                  style={styles.courseImage}
                   //@ts-ignore
                   source={imageAssets[item?.banner_image]}
                 />
-                <View style={{ gap: 5, flex: 1 }}>
-                  <Text
-                    numberOfLines={2}
-                    style={{
-                      fontFamily: "outfit-bold",
-                      fontSize: 16,
-                      flexWrap: "wrap",
-                    }}
-                  >
+                <View style={styles.textContainer}>
+                  <Text numberOfLines={2} style={styles.courseTitle}>
                     {item?.courseTitle}
                   </Text>
-                  <Text style={{ fontFamily: "outfit-regular", fontSize: 12 }}>
+                  <Text style={styles.chaptersText}>
                     {item?.chapters?.length} Chapters
                   </Text>
                 </View>
               </View>
-              <View style={{ marginTop: 12, marginBottom: 6 }}>
+              <View style={styles.progressContainer}>
                 <Progress.Bar progress={0} width={260} />
-                <Text
-                  style={{
-                    fontFamily: "outfit-regular",
-                    fontSize: 12,
-                    marginTop: 2,
-                  }}
-                >
+                <Text style={styles.progressText}>
                   3 out of 5 Chapters Completed
                 </Text>
               </View>
@@ -74,5 +52,59 @@ const CourseProgress = ({ courseList }: any) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 12,
+  },
+  title: {
+    fontFamily: "outfit-bold",
+    fontSize: 25,
+    marginHorizontal: 25,
+  },
+  listContainer: {
+    marginVertical: 0,
+    marginTop: 8,
+  },
+  separator: {
+    width: 16,
+  },
+  card: {
+    padding: 8,
+    borderRadius: 16,
+    width: 280,
+  },
+  courseInfo: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  courseImage: {
+    height: 60,
+    width: 60,
+    borderRadius: 16,
+  },
+  textContainer: {
+    gap: 5,
+    flex: 1,
+  },
+  courseTitle: {
+    fontFamily: "outfit-bold",
+    fontSize: 16,
+    flexWrap: "wrap",
+  },
+  chaptersText: {
+    fontFamily: "outfit-regular",
+    fontSize: 12,
+  },
+  progressContainer: {
+    marginTop: 12,
+    marginBottom: 6,
+  },
+  progressText: {
+    fontFamily: "outfit-regular",
+    fontSize: 12,
+    marginTop: 2,
+  },
+});
 
 export default CourseProgress;
