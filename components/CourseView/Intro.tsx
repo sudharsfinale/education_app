@@ -17,7 +17,7 @@ const Intro = (props: any) => {
         <Text style={styles.title}>{course?.courseTitle}</Text>
       </View>
       <View style={styles.infoContainer}>
-        <Ionicons name="book-outline" size={20} />
+        <Ionicons color={colors.PRIMARY} name="book-outline" size={20} />
         <Text style={styles.infoText}>{course?.chapters?.length} Chapters</Text>
       </View>
       <View style={styles.descriptionContainer}>
@@ -56,6 +56,8 @@ const styles = StyleSheet.create({
   infoText: {
     fontFamily: "outfit-regular",
     fontSize: 18,
+    color: colors.PRIMARY,
+    top: -1,
   },
   descriptionContainer: {
     paddingHorizontal: 20,
