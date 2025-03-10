@@ -48,11 +48,13 @@ const AddCourse = () => {
     try {
       const airesponse = await GenerateCourseAiModel.sendMessage(PROMPT);
       let courses = JSON.parse(airesponse.response.text());
+      const docId = Date.now().toString();
       courses?.forEach(async (course: any) => {
-        await setDoc(doc(db, "Courses", Date.now().toString()), {
+        await setDoc(doc(db, "Courses", docId), {
           ...course,
           createdOn: new Date(),
           createdBy: userDetail?.email,
+          docId: docId,
         });
       });
       setLoading(false);
