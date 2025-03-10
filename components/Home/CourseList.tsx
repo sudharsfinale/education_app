@@ -26,7 +26,8 @@ const CourseList = (props: any) => {
           <Pressable
             onPress={() =>
               router.push({
-                pathname: "/courseView",
+                //@ts-ignore
+                pathname: `/courseView/${item?.docId}`,
                 params: { courseParams: JSON.stringify(item) },
               })
             }
