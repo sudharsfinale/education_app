@@ -15,6 +15,7 @@ import Intro from "@/components/CourseView/Intro";
 import Chapters from "@/components/CourseView/Chapters";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/config/firebaseConfig";
+import { useIsFocused } from "@react-navigation/native";
 
 const CourseView = () => {
   const { courseParams, courseId }: any = useLocalSearchParams();
@@ -28,15 +29,13 @@ const CourseView = () => {
       setGettingCourseData(false);
     }
   };
+  const isFocused = useIsFocused();
   useEffect(() => {
-    if (!courseParams && courseId) {
+    if (courseId) {
       setGettingCourseData(true);
       getCourseById();
-    } else if (courseParams) {
-      const course: any = JSON.parse(courseParams);
-      setCourseData(course);
     }
-  }, [courseId]);
+  }, [isFocused]);
   return courseData ? (
     <FlatList
       data={[]}
