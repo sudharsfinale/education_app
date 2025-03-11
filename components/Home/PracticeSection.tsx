@@ -1,9 +1,18 @@
-import { View, Text, Image, FlatList, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
 import { PraticeOption } from "@/constants/Options";
 import { colors } from "@/constants/Colors";
+import { useRouter } from "expo-router";
 
 const PracticeSection = () => {
+  const router = useRouter();
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Practice</Text>
@@ -14,7 +23,9 @@ const PracticeSection = () => {
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           renderItem={({ item, index }) => (
-            <View
+            <TouchableOpacity
+              //@ts-ignore
+              onPress={() => router.push("/practice/" + item.name)}
               style={[
                 styles.itemContainer,
                 index !== PraticeOption.length - 1 && styles.itemMargin,
@@ -22,7 +33,7 @@ const PracticeSection = () => {
             >
               <Image style={styles.image} source={item.image} />
               <Text style={styles.imageText}>{item.name}</Text>
-            </View>
+            </TouchableOpacity>
           )}
         />
       </View>

@@ -5,6 +5,7 @@ import {
   FlatList,
   ActivityIndicator,
   Image,
+  Dimensions,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import Header from "@/components/Home/Header";
@@ -61,7 +62,12 @@ const Home = () => {
       refreshing={courseFetching}
       style={{ backgroundColor: colors.WHITE, flex: 1 }}
       ListHeaderComponent={
-        <View style={{ backgroundColor: colors.WHITE, flex: 1 }}>
+        <View
+          style={{
+            backgroundColor: colors.WHITE,
+            flex: 1,
+          }}
+        >
           <Image
             style={{ position: "absolute", width: "100%", height: 700 }}
             source={require("@/assets/images/wave.png")}
@@ -79,9 +85,11 @@ const Home = () => {
                 flex: 1,
                 alignItems: "center",
                 justifyContent: "center",
+                zIndex: 10,
+                height: Dimensions.get("window").height - 200,
               }}
             >
-              <ActivityIndicator size={50} />
+              <ActivityIndicator color={colors.WHITE} size={50} />
             </View>
           ) : (
             <NoCoursePage />
