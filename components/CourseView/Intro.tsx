@@ -27,7 +27,10 @@ const Intro = (props: any) => {
         </Text>
         <Button onButtonPress={() => {}} buttonText={"Start Learning"} />
       </View>
-      <Pressable onPress={() => router.back()} style={styles.backButton}>
+      <Pressable
+        onPress={() => router.push("/(tabs)/Home")}
+        style={styles.backButton}
+      >
         <Ionicons name="arrow-back" size={24} />
       </Pressable>
     </View>

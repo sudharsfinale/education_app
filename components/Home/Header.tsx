@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useContext } from "react";
 import { UserDetailContext } from "@/context/UserDetailContext";
 import { Ionicons } from "@expo/vector-icons";
+import { colors } from "@/constants/Colors";
 
 const Header = () => {
   //@ts-ignore
@@ -14,7 +15,7 @@ const Header = () => {
         <Text style={styles.subtitle}>Let's get started</Text>
       </View>
       <TouchableOpacity>
-        <Ionicons size={32} name="settings-outline" />
+        <Ionicons size={32} name="settings-outline" color={colors.WHITE} />
       </TouchableOpacity>
     </View>
   );
@@ -34,10 +35,12 @@ const styles = StyleSheet.create({
   greeting: {
     fontFamily: "outfit-bold",
     fontSize: 25,
+    color: colors.WHITE,
   },
   subtitle: {
     fontFamily: "outfit",
     fontSize: 17,
+    color: colors.WHITE,
   },
 });
 

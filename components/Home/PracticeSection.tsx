@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     fontFamily: "outfit-bold",
     fontSize: 25,
     marginHorizontal: 25,
+    color: colors.WHITE,
   },
   listContainer: {
     marginHorizontal: 25,

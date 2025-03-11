@@ -14,39 +14,51 @@ const CourseProgress = ({ courseList }: any) => {
           horizontal
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
-          renderItem={({ item, index }) => (
-            <View
-              style={[
-                styles.card,
-                {
-                  marginLeft: index === 0 ? 25 : 0,
-                  backgroundColor: colors.BG_GRAY,
-                },
-              ]}
-            >
-              <View style={styles.courseInfo}>
-                <Image
-                  style={styles.courseImage}
-                  //@ts-ignore
-                  source={imageAssets[item?.banner_image]}
-                />
-                <View style={styles.textContainer}>
-                  <Text numberOfLines={2} style={styles.courseTitle}>
-                    {item?.courseTitle}
-                  </Text>
-                  <Text style={styles.chaptersText}>
-                    {item?.chapters?.length} Chapters
+          renderItem={({ item, index }) => {
+            const completedChapters = item?.completedChapters?.length || 0;
+            const totalChapters = item?.chapters?.length;
+            const getProgressPercentage = () => {
+              let perc = completedChapters / totalChapters;
+              return perc;
+            };
+            return (
+              <View
+                style={[
+                  styles.card,
+                  {
+                    marginLeft: index === 0 ? 25 : 0,
+                    backgroundColor: colors.BG_GRAY,
+                  },
+                ]}
+              >
+                <View style={styles.courseInfo}>
+                  <Image
+                    style={styles.courseImage}
+                    //@ts-ignore
+                    source={imageAssets[item?.banner_image]}
+                  />
+                  <View style={styles.textContainer}>
+                    <Text numberOfLines={2} style={styles.courseTitle}>
+                      {item?.courseTitle}
+                    </Text>
+                    <Text style={styles.chaptersText}>
+                      {totalChapters} Chapters
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.progressContainer}>
+                  <Progress.Bar
+                    progress={getProgressPercentage()}
+                    width={260}
+                  />
+                  <Text style={styles.progressText}>
+                    {completedChapters} out of {totalChapters} Chapters
+                    Completed
                   </Text>
                 </View>
               </View>
-              <View style={styles.progressContainer}>
-                <Progress.Bar progress={0} width={260} />
-                <Text style={styles.progressText}>
-                  3 out of 5 Chapters Completed
-                </Text>
-              </View>
-            </View>
-          )}
+            );
+          }}
         />
       </View>
     </View>
@@ -61,6 +73,7 @@ const styles = StyleSheet.create({
     fontFamily: "outfit-bold",
     fontSize: 25,
     marginHorizontal: 25,
+    color: colors.WHITE,
   },
   listContainer: {
     marginVertical: 0,
