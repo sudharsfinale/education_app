@@ -55,32 +55,36 @@ const ChapterView: React.FC = () => {
           >
             {explanation ? explanation : ""}
           </Text>
-          <Text
-            style={{
-              fontFamily: "outfit-regular",
-              fontSize: 18,
-              marginVertical: 6,
-              backgroundColor: colors.BLACK,
-              color: colors.WHITE,
-              padding: 12,
-              borderRadius: 12,
-            }}
-          >
-            {code ? code : ""}
-          </Text>
-          <Text
-            style={{
-              fontFamily: "outfit-regular",
-              fontSize: 18,
-              marginBottom: 6,
-              marginTop: 6,
-              backgroundColor: colors.BG_GRAY,
-              padding: 12,
-              borderRadius: 12,
-            }}
-          >
-            {example ? example : ""}
-          </Text>
+          {code && (
+            <Text
+              style={{
+                fontFamily: "outfit-regular",
+                fontSize: 18,
+                marginVertical: 6,
+                backgroundColor: colors.BLACK,
+                color: colors.WHITE,
+                padding: 12,
+                borderRadius: 12,
+              }}
+            >
+              {code ? code : ""}
+            </Text>
+          )}
+          {example && (
+            <Text
+              style={{
+                fontFamily: "outfit-regular",
+                fontSize: 18,
+                marginBottom: 6,
+                marginTop: 6,
+                backgroundColor: colors.BG_GRAY,
+                padding: 12,
+                borderRadius: 12,
+              }}
+            >
+              {example ? example : ""}
+            </Text>
+          )}
         </View>
       </ScrollView>
       {isEnd ? (
