@@ -9,21 +9,25 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "@/constants/Colors";
 import * as Progress from "react-native-progress";
 import Button from "@/components/Shared/Button";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/config/firebaseConfig";
 
 const Quiz = () => {
   const { courseParams }: any = useLocalSearchParams();
   const course = JSON.parse(courseParams);
-
+  const router = useRouter();
   const width = Dimensions.get("screen").width * 0.85;
   const quizInfo = course.quiz;
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedOption, setSelectedOption] = useState<any>(undefined);
+  const [answerError, setAnswerError] = useState(false);
   const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
   const getProgressPercentage = () => {
     let perc = currentPage / quizInfo?.length;
     return perc;
@@ -38,7 +42,26 @@ const Quiz = () => {
       },
     }));
   };
-  console.log(JSON.stringify(result, null, 2));
+
+  //@ts-ignore
+  let current_answer = result?.[currentPage]?.userChoice;
+  const onQuizFinish = async () => {
+    if (current_answer || selectedOption) {
+      setLoading(true);
+      try {
+        await updateDoc(doc(db, "Courses", course?.docId), {
+          quizResult: result,
+        });
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+      // router.replace(`/courseView/${docId}`);
+    } else {
+      setAnswerError(true);
+    }
+  };
   return (
     <ImageBackground
       source={require("../../assets/images/wave.png")}
@@ -123,6 +146,7 @@ const Quiz = () => {
                       onPress={() => {
                         onOptionSelect(item);
                         setSelectedOption(String(index));
+                        setAnswerError(false);
                       }}
                       key={index}
                       style={{
@@ -132,11 +156,13 @@ const Quiz = () => {
                         flexDirection: "row",
                         justifyContent: "space-between",
                         backgroundColor:
-                          Number(selectedOption) === index
+                          Number(selectedOption) === index ||
+                          current_answer === item
                             ? colors.LIGHT_GREEN
                             : colors.WHITE,
                         borderColor:
-                          Number(selectedOption) === index
+                          Number(selectedOption) === index ||
+                          current_answer === item
                             ? colors.GREEN
                             : "#e7e7e7",
                       }}
@@ -149,8 +175,21 @@ const Quiz = () => {
                 }}
               />
             </View>
+            {answerError && (
+              <Text
+                style={{
+                  fontFamily: "outfit-regular",
+                  marginTop: 12,
+                  textAlign: "center",
+                  color: "#cc0000",
+                }}
+              >
+                *Please select answer to continue
+              </Text>
+            )}
           </View>
         </View>
+
         <View style={{ marginHorizontal: 24, flexDirection: "row", gap: 12 }}>
           {currentPage !== 0 && (
             <View style={{ flex: 1 }}>
@@ -166,13 +205,21 @@ const Quiz = () => {
           )}
           <View style={{ flex: 1 }}>
             {currentPage + 1 === quizInfo?.length ? (
-              <Button buttonText="Finish" onButtonPress={() => {}} />
+              <Button
+                loading={loading}
+                buttonText="Finish"
+                onButtonPress={onQuizFinish}
+              />
             ) : (
               <Button
                 buttonText="Next"
                 onButtonPress={() => {
-                  setCurrentPage(currentPage + 1);
-                  setSelectedOption(undefined);
+                  if (current_answer || selectedOption) {
+                    setCurrentPage(currentPage + 1);
+                    setSelectedOption(undefined);
+                  } else {
+                    setAnswerError(true);
+                  }
                 }}
               />
             )}
