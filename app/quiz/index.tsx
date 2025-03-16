@@ -53,6 +53,12 @@ const Quiz = () => {
           quizResult: result,
         });
         setLoading(false);
+        router.replace({
+          pathname: "/quiz/Summary",
+          params: {
+            quizResult: JSON.stringify(result),
+          },
+        });
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -199,6 +205,7 @@ const Quiz = () => {
                 onButtonPress={() => {
                   setCurrentPage(currentPage - 1);
                   setSelectedOption(undefined);
+                  setAnswerError(false);
                 }}
               />
             </View>
