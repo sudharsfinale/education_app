@@ -8,14 +8,13 @@ const CourseListGrid = (props: any) => {
   const { option, courseList } = props;
   const router = useRouter();
   const onPress = (course: any) => {
-    if (option.name === "Quiz") {
-      router.push({
-        pathname: "/quiz",
-        params: {
-          courseParams: JSON.stringify(course),
-        },
-      });
-    }
+    router.push({
+      //@ts-ignore
+      pathname: option?.path,
+      params: {
+        courseParams: JSON.stringify(course),
+      },
+    });
   };
   return (
     <View style={{ marginTop: 6 }}>
