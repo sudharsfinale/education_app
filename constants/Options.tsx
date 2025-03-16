@@ -9,7 +9,7 @@ export const PraticeOption = [
     name: "Flashcards",
     image: require("./../assets/images/flashcard.png"),
     icon: require("./../assets/images/layers.png"),
-    path: "/flashcards",
+    path: "/flashCards",
   },
   {
     name: "Question & Ans",

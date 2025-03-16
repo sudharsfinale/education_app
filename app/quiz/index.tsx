@@ -85,7 +85,7 @@ const Quiz = () => {
             width: "100%",
           }}
         >
-          <Pressable onPress={() => {}}>
+          <Pressable onPress={() => router.back()}>
             <Ionicons size={32} name="arrow-back" color={colors.WHITE} />
           </Pressable>
           <Text
