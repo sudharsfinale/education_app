@@ -90,7 +90,13 @@ const FlashCardSection = () => {
               <FlipCard style={styles.filpCard}>
                 {/* Face Side */}
                 <View style={styles.front}>
-                  <Text style={{ fontFamily: "outfit-bold", fontSize: 28 }}>
+                  <Text
+                    style={{
+                      fontFamily: "outfit-bold",
+                      fontSize: 28,
+                      padding: 16,
+                    }}
+                  >
                     {item?.front}
                   </Text>
                 </View>
