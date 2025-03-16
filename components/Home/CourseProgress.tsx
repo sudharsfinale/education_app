@@ -3,6 +3,7 @@ import React from "react";
 import { imageAssets } from "@/constants/Options";
 import { colors } from "@/constants/Colors";
 import * as Progress from "react-native-progress";
+import CourseProgressCard from "../Shared/CourseProgressCard";
 
 const CourseProgress = ({ courseList }: any) => {
   return (
@@ -15,49 +16,7 @@ const CourseProgress = ({ courseList }: any) => {
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           renderItem={({ item, index }) => {
-            const completedChapters = item?.completedChapters?.length || 0;
-            const totalChapters = item?.chapters?.length;
-            const getProgressPercentage = () => {
-              let perc = completedChapters / totalChapters;
-              return perc;
-            };
-            return (
-              <View
-                style={[
-                  styles.card,
-                  {
-                    marginLeft: index === 0 ? 25 : 0,
-                    backgroundColor: colors.BG_GRAY,
-                  },
-                ]}
-              >
-                <View style={styles.courseInfo}>
-                  <Image
-                    style={styles.courseImage}
-                    //@ts-ignore
-                    source={imageAssets[item?.banner_image]}
-                  />
-                  <View style={styles.textContainer}>
-                    <Text numberOfLines={2} style={styles.courseTitle}>
-                      {item?.courseTitle}
-                    </Text>
-                    <Text style={styles.chaptersText}>
-                      {totalChapters} Chapters
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.progressContainer}>
-                  <Progress.Bar
-                    progress={getProgressPercentage()}
-                    width={260}
-                  />
-                  <Text style={styles.progressText}>
-                    {completedChapters} out of {totalChapters} Chapters
-                    Completed
-                  </Text>
-                </View>
-              </View>
-            );
+            return <CourseProgressCard item={item} index={index} />;
           }}
         />
       </View>
@@ -91,11 +50,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 8,
   },
-  courseImage: {
-    height: 60,
-    width: 60,
-    borderRadius: 16,
-  },
+
   textContainer: {
     gap: 5,
     flex: 1,
